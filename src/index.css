@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+  font-family: "Vollkorn SC", serif;
+  font-weight: 400;
+  font-size: 23px;
+  color: #737373;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+@keyframes cloud-move {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(calc(100vw + 100%));
+  }
+}
+
+.animate-cloud-move {
+  animation-name: cloud-move;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
