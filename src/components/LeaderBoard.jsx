@@ -38,25 +38,27 @@ const LeaderBoard = observer(() => {
                     <div className='text-center w-full text-2xl py-6 bg-[#F6F6F6]'>
                         Таблица лидеров
                     </div>
-                    <div className="flex flex-col items-center gap-2 mt-6 w-full">
-                        {leaderBoardStore.sortedParticipants.slice(3).map((participant, index) => (
-                            <div
-                                key={participant.name}
-                                className={`flex max-w-3xl w-full justify-between items-center px-12 py-4 rounded-full transition-colors bg-[#F6F6F6]
+                    {!leaderBoardStore.isLoading && leaderBoardStore.participants.length != 0 && (
+                        <div className="flex flex-col items-center gap-2 mt-6 w-full">
+                            {leaderBoardStore.sortedParticipants.slice(3).map((participant, index) => (
+                                <div
+                                    key={participant.name}
+                                    className={`flex max-w-3xl w-full justify-between items-center px-12 py-4 rounded-full transition-colors bg-[#F6F6F6]
                                 }`}
-                            >
-                                <div className="text-base">
-                                    {index + 4}.
+                                >
+                                    <div className="text-base">
+                                        {index + 4}.
+                                    </div>
+                                    <div className="text-base flex-1 ml-4">
+                                        {participant.name}
+                                    </div>
+                                    <div className="text-base">
+                                        {getScoreText(participant.score)}
+                                    </div>
                                 </div>
-                                <div className="text-base flex-1 ml-4">
-                                    {participant.name}
-                                </div>
-                                <div className="text-base">
-                                    {getScoreText(participant.score)}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

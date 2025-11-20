@@ -15,7 +15,10 @@ class LeaderBoardStore {
 
     // Получение данных с API
     async fetchParticipants() {
-        this.isLoading = true;
+        // Устанавливаем isLoading только если это первая загрузка (нет данных)
+        if (this.participants.length === 0) {
+            this.isLoading = true;
+        }
         this.error = null;
 
         try {

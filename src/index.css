@@ -29,3 +29,17 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
+
+@keyframes pedestals-appear {
+  0% {
+    transform: translateY(50%);
+  }
+
+  100% {
+    transform: translateY(40px);
+  }
+}
+
+.animate-pedestals-appear {
+  animation: pedestals-appear 1.6s ease forwards;
+}

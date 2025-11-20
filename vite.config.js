@@ -5,6 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: '0.0.0.0',
+    cors: true,
     proxy: {
       '/google-api': {
         target: 'https://script.googleusercontent.com',
@@ -12,5 +14,9 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/google-api/, ''),
       },
     },
+  },
+  preview: {
+    host: '0.0.0.0',
+    cors: true,
   },
 })

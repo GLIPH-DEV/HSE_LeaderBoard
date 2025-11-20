@@ -9,11 +9,19 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 const TopLeaders = observer(() => {
     const { leaderBoardStore } = useStore();
     const [clouds, setClouds] = useState([]);
+    const [hasLoaded, setHasLoaded] = useState(false);
     const nextId = useRef(0);
 
     const handleCloudAnimationEnd = useCallback((id) => {
         setClouds(prev => prev.filter(cloud => cloud.id !== id));
     }, []);
+
+    // Отслеживаем первую загрузку данных
+    useEffect(() => {
+        if (!leaderBoardStore.isLoading && leaderBoardStore.participants.length > 0 && !hasLoaded) {
+            setHasLoaded(true);
+        }
+    }, [leaderBoardStore.isLoading, leaderBoardStore.participants.length, hasLoaded]);
 
     useEffect(() => {
         const spawnCloud = () => {
@@ -24,7 +32,7 @@ const TopLeaders = observer(() => {
             const scale = Math.random() * 0.5 + 1; // Random scale (0.5 - 1.0)
 
             setClouds(prev => {
-                if (prev.length >= 5) return prev;
+                if (prev.length >= 4) return prev;
                 return [...prev, { id, top, duration, delay, scale }];
             });
         };
@@ -32,13 +40,17 @@ const TopLeaders = observer(() => {
         // Initial cloud - spawn first one immediately
         spawnCloud();
 
-        const interval = setInterval(spawnCloud, 5000); // Spawn a new cloud every 5 seconds
+        const interval = setInterval(spawnCloud, 60000); // Spawn a new cloud every 5 seconds
 
         return () => clearInterval(interval);
     }, []);
 
     if (leaderBoardStore.isLoading && leaderBoardStore.participants.length === 0) {
-        return <div className="p-5 text-center">Загрузка...</div>;
+        return (
+            <div className="w-full h-[800px] bg-gradient-to-b from-[#94C9EE] to-[#5DB0E8] relative overflow-hidden">
+                <div className="absolute top-[-30px] right-[-30px] w-24 h-24 rounded-full bg-[#FFED67] z-10"></div>
+            </div>
+        )
     }
 
     return (
@@ -68,7 +80,7 @@ const TopLeaders = observer(() => {
                 </div>
             ))}
 
-            <div className="w-full h-full flex items-end justify-center gap-24 translate-y-10">
+            <div className={`w-full h-full flex items-end justify-center gap-24 translate-y-10 ${hasLoaded ? 'animate-pedestals-appear' : 'opacity-0'}`}>
                 {/* 2nd Place */}
                 <Pedestal
                     place={2}
