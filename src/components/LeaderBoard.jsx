@@ -30,12 +30,12 @@ const LeaderBoard = observer(() => {
     }
 
     return (
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto bg-[#F3F4F6]">
             {leaderBoardStore.participants.length === 0 ? (
                 <p className="text-center">Нет данных</p>
             ) : (
                 <div className="flex flex-col items-center gap-2 w-full">
-                    <div className='text-center w-full text-2xl py-6 bg-[#F6F6F6]'>
+                    <div className='text-center w-full text-2xl py-6 bg-[#F3F4F6]'>
                         Таблица лидеров
                     </div>
                     {!leaderBoardStore.isLoading && leaderBoardStore.participants.length != 0 && (
@@ -43,8 +43,7 @@ const LeaderBoard = observer(() => {
                             {leaderBoardStore.sortedParticipants.slice(3).map((participant, index) => (
                                 <div
                                     key={participant.name}
-                                    className={`flex max-w-3xl w-full justify-between items-center px-12 py-4 rounded-full transition-colors bg-[#F6F6F6]
-                                }`}
+                                    className="group relative flex max-w-3xl w-full justify-between items-center px-12 py-4 rounded-full transition-colors bg-[#F9FAFB]"
                                 >
                                     <div className="text-base">
                                         {index + 4}.
@@ -55,6 +54,18 @@ const LeaderBoard = observer(() => {
                                     <div className="text-base">
                                         {getScoreText(participant.score)}
                                     </div>
+
+                                    {/* Подсказка с категориями */}
+                                    {participant.categories && (
+                                        <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-2 -translate-y-full hidden group-hover:flex flex-col gap-1 bg-white text-sm text-gray-800 shadow-lg rounded-xl px-4 py-3 border border-gray-200 z-20">
+                                            {Object.entries(participant.categories).map(([key, value]) => (
+                                                <div key={key} className="flex justify-between gap-4">
+                                                    <span className="capitalize">{key}</span>
+                                                    <span className="font-semibold">{value}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             ))}
                         </div>

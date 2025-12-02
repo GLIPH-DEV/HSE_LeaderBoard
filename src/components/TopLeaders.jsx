@@ -56,6 +56,11 @@ const TopLeaders = observer(() => {
     return (
         <div className="w-full h-[800px] bg-gradient-to-b from-[#94C9EE] to-[#5DB0E8] relative overflow-hidden">
             <div className="absolute top-[-30px] right-[-30px] w-24 h-24 rounded-full bg-[#FFED67] z-10"></div>
+
+            {/* Название игры сверху */}
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 text-white text-3xl font-semibold drop-shadow-lg text-center px-4">
+                {leaderBoardStore.participants[0]?.name || 'Название игры'}
+            </div>
             {/* Cloud Generator */}
             {clouds.map(cloud => (
                 <div
@@ -80,12 +85,13 @@ const TopLeaders = observer(() => {
                 </div>
             ))}
 
-            <div className={`w-full h-full flex items-end justify-center gap-24 translate-y-10 ${hasLoaded ? 'animate-pedestals-appear' : 'opacity-0'}`}>
+            <div className={`w-full h-full flex items-end justify-center gap-24 translate-y-10 relative z-30 ${hasLoaded ? 'animate-pedestals-appear' : 'opacity-0'}`}>
                 {/* 2nd Place */}
                 <Pedestal
                     place={2}
                     name={leaderBoardStore.participants[1]?.name || '?'}
                     score={leaderBoardStore.participants[1]?.score || 0}
+                    categories={leaderBoardStore.participants[1]?.categories}
                 >
                     <span className="text-[130px] leading-none mt-4 text-gray-500">
                         {leaderBoardStore.participants[1]?.name?.[0] || '?'}
@@ -97,6 +103,7 @@ const TopLeaders = observer(() => {
                     place={1}
                     name={leaderBoardStore.participants[0]?.name || '?'}
                     score={leaderBoardStore.participants[0]?.score || 0}
+                    categories={leaderBoardStore.participants[0]?.categories}
                 >
                     <span className="text-[130px] leading-none mt-4 text-yellow-600">
                         {leaderBoardStore.participants[0]?.name?.[0] || '?'}
@@ -108,6 +115,7 @@ const TopLeaders = observer(() => {
                     place={3}
                     name={leaderBoardStore.participants[2]?.name || '?'}
                     score={leaderBoardStore.participants[2]?.score || 0}
+                    categories={leaderBoardStore.participants[2]?.categories}
                 >
                     <span className="text-[130px] leading-none mt-4 text-orange-700">
                         {leaderBoardStore.participants[2]?.name?.[0] || '?'}
